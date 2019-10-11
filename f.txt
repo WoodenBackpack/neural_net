@@ -1,0 +1,4 @@
+neuron.cpp: In member function ‘void Neuron::setVal(const double&)’:
+neuron.cpp:11:7: error: assignment of read-only reference ‘val’
+   val = val;
+       ^
