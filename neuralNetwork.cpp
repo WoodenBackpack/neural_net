@@ -4,6 +4,7 @@
 
 #include "layer.h"
 #include "matrix.h"
+#include "neuron.h"
 
 NeuralNetwork::NeuralNetwork(std::vector<unsigned int>& targetTopology) {
   topology.insert(topology.end(), std::make_move_iterator(targetTopology.begin()), std::make_move_iterator(targetTopology.end()));
