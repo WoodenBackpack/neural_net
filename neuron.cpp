@@ -7,8 +7,10 @@ Neuron::Neuron(const double& initVal): val(initVal) {
   derive();
 }
 
-void Neuron::setVal(const double& newVal) {
+void Neuron::setValue(const double& newVal) {
   val = newVal;
+  activate();
+  derive();
 }
 
 void Neuron::activate() {

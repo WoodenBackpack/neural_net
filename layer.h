@@ -1,7 +1,7 @@
-
 #pragma once
 
 #include <vector>
+#include <memory>
 
 class Neuron;
 class Matrix;
@@ -12,16 +12,16 @@ class Layer {
 
     unsigned int getSize() {return size;}
 
-    void setVal(const unsigned int index, double value);
+    void setValue(const unsigned int index, double value);
 
     Layer(const Layer&) = delete;
     Layer& operator=(const Layer&) = delete;
     
-    std::vector<Neuron*> neurons;
+    std::vector<std::shared_ptr<Neuron>> neurons;
 
-    Matrix* matrixifyValues();
-    Matrix* matrixifyActivatedValues();
-    Matrix* matrixifyDerivedValues();
+    std::shared_ptr<Matrix> matrixifyValues();
+    std::shared_ptr<Matrix> matrixifyActivatedValues();
+    std::shared_ptr<Matrix> matrixifyDerivedValues();
 
   private:
     unsigned int size;

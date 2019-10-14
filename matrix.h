@@ -7,8 +7,10 @@ class Matrix {
 
     std::shared_ptr<Matrix> transpose();
 
-    void setVal(unsigned int r, unsigned int c, double val);
-    double getVal(unsigned int r, unsigned int c);
+    void setValue(unsigned int r, unsigned int c, double val);
+    double getValue(unsigned int r, unsigned int c);
+    double getNumRows() {return numRows;}
+    double getNumCols() {return numCols;}
     
     void print();
   private:

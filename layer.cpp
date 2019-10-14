@@ -5,40 +5,40 @@
 
 Layer::Layer(const unsigned int& size) : size(size) {
   for (unsigned int i = 0; i < size; ++i) {
-    Neuron* n = new Neuron(0.0);
+    std::shared_ptr<Neuron> n = std::make_shared<Neuron>(0.0);
     neurons.push_back(n);
   }
 }
 
-void Layer::setVal(const unsigned int index, double value) {
+void Layer::setValue(const unsigned int index, double value) {
   if (index <= neurons.size()) {
-    neurons.at(index)->setVal(value);
+    neurons.at(index)->setValue(value);
   }
 }
 
-Matrix* Layer::matrixifyValues() {
-  Matrix* m = new Matrix(1, neurons.size(), false);
+std::shared_ptr<Matrix> Layer::matrixifyValues() {
+  std::shared_ptr<Matrix> m = std::make_shared<Matrix>(1, neurons.size(), false);
   const unsigned int firstCol = 0;
   for (unsigned int i = 0 ; i < neurons.size() ; ++i) {
-    m->setVal(i, firstCol, neurons.at(i)->getVal());
-  }
-  return m;
-}
-
-Matrix* Layer::matrixifyActivatedValues() {
-  Matrix* m = new Matrix(1, neurons.size(), false);
-  const unsigned int firstCol = 0;
-  for (unsigned int i = 0 ; i < neurons.size() ; ++i) {
-    m->setVal(i, firstCol, neurons.at(i)->getActivatedVal());
+    m->setValue(firstCol, i, neurons.at(i)->getValue());
   }
   return m;
 }
 
-Matrix* Layer::matrixifyDerivedValues() {
-  Matrix* m = new Matrix(1, neurons.size(), false);
+std::shared_ptr<Matrix> Layer::matrixifyActivatedValues() {
+  std::shared_ptr<Matrix> m = std::make_shared<Matrix>(1, neurons.size(), false);
   const unsigned int firstCol = 0;
   for (unsigned int i = 0 ; i < neurons.size() ; ++i) {
-    m->setVal(i, firstCol, neurons.at(i)->getDerivedVal());
+    m->setValue(firstCol, i, neurons.at(i)->getActivatedValue());
+  }
+  return m;
+}
+
+std::shared_ptr<Matrix> Layer::matrixifyDerivedValues() {
+  std::shared_ptr<Matrix> m = std::make_unique<Matrix>(1, neurons.size(), false);
+  const unsigned int firstCol = 0;
+  for (unsigned int i = 0 ; i < neurons.size() ; ++i) {
+    m->setValue(firstCol, i, neurons.at(i)->getDerivedValue());
   }
   return m;
 }

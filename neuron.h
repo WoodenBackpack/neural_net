@@ -6,7 +6,7 @@ class Neuron {
   public:
     Neuron(const double& initVal);
 
-    void setVal(const double& val);
+    void setValue(const double& val);
     
     // Fast Sigmoid Fun
     // f(x) = x / ( 1 + |x| )
@@ -16,9 +16,9 @@ class Neuron {
     // f'(x) = f(x) * (1 - f(x))
     void derive();
 
-    double getVal() {return val;}
-    double getActivatedVal() {return activatedVal;}
-    double getDerivedVal() {return derivedVal;}   
+    double getValue() {return val;}
+    double getActivatedValue() {return activatedVal;}
+    double getDerivedValue() {return derivedVal;}   
 
 
     Neuron(const Neuron&) = delete;

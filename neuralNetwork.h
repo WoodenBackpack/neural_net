@@ -1,6 +1,8 @@
 #pragma once
 
 #include <vector>
+#include <memory>
+
 #include "layer.h"
 
 class Matrix;
@@ -10,9 +12,22 @@ class NeuralNetwork {
   public:
     NeuralNetwork(std::vector<unsigned int>& topology);
     void injectInput(const std::vector<double>& input);
+    std::shared_ptr<Matrix> getNeuronMatrix(const unsigned int index) {return layers.at(index)->matrixifyValues();}
+   
+    std::shared_ptr<Matrix> getActivatedNeuronMatrix(const unsigned int index) {return layers.at(index)->matrixifyActivatedValues();}
+
+    std::shared_ptr<Matrix> getDerivedNeuronMatrix(const unsigned int index) {return layers.at(index)->matrixifyDerivedValues();}
+
+    std::shared_ptr<Matrix> getWeightMatrix(const unsigned int index) {return weightMatrices.at(index);}
+
+    void feedForward();
+
+    void setNeuronValue(unsigned int layerIndex, unsigned int neuronValue, double value);
+
     void print();
+
   private:
     std::vector<unsigned int> topology;
-    std::vector<Layer*> layers;
-    std::vector<Matrix*> weightMatrices;
+    std::vector<std::shared_ptr<Layer>> layers;
+    std::vector<std::shared_ptr<Matrix>> weightMatrices;
 };
