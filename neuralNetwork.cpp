@@ -1,10 +1,19 @@
 #include "neuralNetwork.h"
 
 #include <iostream>
+#include <exception>
 
 #include "layer.h"
 #include "neuron.h"
 #include "utils.cpp"
+
+class WrongExpectedError : public std::exception {
+public:
+  virtual const char* what() const throw() {
+    return "Wrong size of expected can't calulcate error!\n";
+  }
+};
+
 
 NeuralNetwork::NeuralNetwork(std::vector<unsigned int>& targetTopology) {
   topology.insert(topology.end(), std::make_move_iterator(targetTopology.begin()), std::make_move_iterator(targetTopology.end()));
@@ -34,7 +43,7 @@ void NeuralNetwork::print() {
   }
 }
 
-void NeuralNetwork::feedForward() {
+void NeuralNetwork::feedForward(std::vector<double> expected) {
   for (unsigned int i = 0 ; i < layers.size() - 1; ++ i) {
     std::shared_ptr<Matrix> currentLayer;
     if (i == 0) {
@@ -50,8 +59,30 @@ void NeuralNetwork::feedForward() {
       setNeuronValue(i + 1, j, multipliedValue);
     }
   }
+  try {
+    calculateError(expected);
+  } catch (WrongExpectedError e) {
+    std::cout<<e.what()<<"\n";
+  }
 }
 
+
+double NeuralNetwork::calculateError(std::vector<double> expected) {
+  if (expected.size() != layers.at(layers.size() - 1)->getSize()) {
+    throw WrongExpectedError();
+  }
+  std::shared_ptr<Layer> lastLayer = layers.at(layers.size() - 1);
+  for (unsigned int i = 0 ; i < lastLayer->getSize(); ++i) {
+    double localError = expected.at(i) - lastLayer->getValue(i);
+    error -= localError;
+    errors.push_back(localError);
+  }
+  for (auto&& it : errors) {
+    std::cout<<it<<" ";
+  }
+  std::cout<<"\nglobal error : " << error << "\n";
+
+}
 void NeuralNetwork::setNeuronValue(unsigned int layerIndex, unsigned int neuronValue, double value) {
   layers.at(layerIndex)->setValue(neuronValue, value);
 }

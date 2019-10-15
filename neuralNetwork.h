@@ -20,7 +20,7 @@ class NeuralNetwork {
 
     std::shared_ptr<Matrix> getWeightMatrix(const unsigned int index) {return weightMatrices.at(index);}
 
-    void feedForward();
+    void feedForward(std::vector<double> expected);
 
     void setNeuronValue(unsigned int layerIndex, unsigned int neuronValue, double value);
 
@@ -30,4 +30,8 @@ class NeuralNetwork {
     std::vector<unsigned int> topology;
     std::vector<std::shared_ptr<Layer>> layers;
     std::vector<std::shared_ptr<Matrix>> weightMatrices;
+    std::vector<double> errors;
+    double error{0};
+    
+    double calculateError(std::vector<double> expected);
 };

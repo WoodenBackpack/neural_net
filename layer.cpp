@@ -16,6 +16,10 @@ void Layer::setValue(const unsigned int index, double value) {
   }
 }
 
+double Layer::getValue(const unsigned int index) {
+  return neurons.at(index)->getValue();
+}
+
 std::shared_ptr<Matrix> Layer::matrixifyValues() {
   std::shared_ptr<Matrix> m = std::make_shared<Matrix>(1, neurons.size(), false);
   const unsigned int firstCol = 0;

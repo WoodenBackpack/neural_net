@@ -10,9 +10,8 @@ int main(int argc, char** argv) {
   NeuralNetwork nn(top);
   std::vector<double> in{0,1};
   nn.injectInput(in);
-  nn.print();
   std::cout<<"===================\n";
-  nn.feedForward();
+  nn.feedForward(std::vector<double>{1,0});
   nn.print();
 
   return 0;

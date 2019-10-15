@@ -13,6 +13,7 @@ class Layer {
     unsigned int getSize() {return size;}
 
     void setValue(const unsigned int index, double value);
+    double getValue(const unsigned int index);
 
     Layer(const Layer&) = delete;
     Layer& operator=(const Layer&) = delete;
