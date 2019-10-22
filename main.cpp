@@ -13,6 +13,5 @@ int main(int argc, char** argv) {
   std::cout<<"===================\n";
   nn.feedForward(std::vector<double>{1,0});
   nn.print();
-
   return 0;
 }

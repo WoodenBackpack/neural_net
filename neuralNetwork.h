@@ -22,6 +22,8 @@ class NeuralNetwork {
 
     void feedForward(std::vector<double> expected);
 
+    void backPropagate();
+   
     void setNeuronValue(unsigned int layerIndex, unsigned int neuronValue, double value);
 
     void print();
@@ -30,6 +32,8 @@ class NeuralNetwork {
     std::vector<unsigned int> topology;
     std::vector<std::shared_ptr<Layer>> layers;
     std::vector<std::shared_ptr<Matrix>> weightMatrices;
+    std::vector<std::shared_ptr<Matrix>> gradientMatrices;
+
     std::vector<double> errors;
     double error{0};
     

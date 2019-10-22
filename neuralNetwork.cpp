@@ -86,3 +86,17 @@ double NeuralNetwork::calculateError(std::vector<double> expected) {
 void NeuralNetwork::setNeuronValue(unsigned int layerIndex, unsigned int neuronValue, double value) {
   layers.at(layerIndex)->setValue(neuronValue, value);
 }
+
+
+void NeuralNetwork::backPropagate() {
+  const unsigned int outputLayerIndex = layers.size() - 1;
+  const std::shared_ptr<Layer> outputLayer = layers.at(outputLayerIndex);
+  std::shared_ptr<Matrix> derivedValuesYToZ = outputLayer->matrixifyDerivedValues();
+  std::shared_ptr<Matrix> gradientsYToZ = std::make_shared<Matrix>(1, outputLayer->neurons.size());
+  for (unsigned int i = 0 ; i < errors.size(); ++i) {
+    const double val = derivedValuesYToZ->getValue(0, i);
+    const double error = errors.at(i);
+    const double gradient = val * error;
+    gradientsYToZ->setValue(0, i , gradient);
+  }
+}

@@ -3,7 +3,7 @@
 
 class Matrix {
   public:
-    Matrix(const unsigned int& numRows, const unsigned int& numCols, bool isRandom);
+    Matrix(const unsigned int& numRows, const unsigned int& numCols, bool isRandom = false);
 
     std::shared_ptr<Matrix> transpose();
 
